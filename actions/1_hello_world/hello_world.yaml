@@ -1,0 +1,16 @@
+name: Hello World
+
+on: [push] # Workflow is triggered on pushes to the repository.
+
+jobs:
+  build:
+    name: Greeting # Job name is Greeting
+    runs-on: ubuntu-latest # This job runs on Linux
+    steps: # This step uses GitHub's hello-world-javascript-action: https://github.com/actions/hello-world-javascript-action
+      - name: Hello world
+        id: hello
+        uses: actions/hello-world-javascript-action@v1
+        with:
+          who-to-greet: 'akasai'
+      - name: Echo the greeting's time  # This step prints an output (time) from the previous step's action.
+        run: echo 'The time was ${{ steps.hello.outputs.time }}.' # hello.outputs is above step's results

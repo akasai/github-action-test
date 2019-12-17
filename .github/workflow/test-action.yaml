@@ -1,0 +1,16 @@
+name: Hello World
+
+on: [push]
+
+jobs:
+  build:
+    name: Greeting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hello world
+        id: hello
+        uses: actions/hello-world-javascript-action@v1
+        with:
+          who-to-greet: 'akasai'
+      - name: Echo the greeting's time
+        run: echo 'The time was ${{ steps.hello.outputs.time }}.'
