@@ -2,7 +2,7 @@
 this repository is test for github action
 
 # Flow
-1. make directory `.github/workflow` in the root.
+1. make directory `.github/workflows` in the root.
 
     workflows must have at least **one job**, and jobs contain a set of steps that perform **individual tasks.**
 
