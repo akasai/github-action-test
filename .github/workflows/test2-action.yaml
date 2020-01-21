@@ -1,0 +1,19 @@
+name: Checkout Action
+
+on: [push]
+#  pull_request:
+#    - master
+
+jobs:
+  my_jobs:
+    name: CheckoutAction
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check this Repository
+        id: repository
+        run: |
+          echo 'This repository is ${{ github.repository }}'
+          echo 'This repository is ${{ github.repository }}'
+      - name: Checkout
+        uses: actions/checkout@v2
+        timeout-minutes: 5
