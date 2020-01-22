@@ -45,11 +45,15 @@ The path to the full event webhook payload on the runner.
 
 `string`
 
+현재 동작하는 workflow의 이름. 만약 이름이 따로 없다면, 레포짓토리 workflow의 full path가 출력된다.
+
 The name of the workflow. If the workflow file doesn't specify a name, the value of this property is the full path of the workflow file in the repository.
 
 ### github.actor
 
 `string`
+
+workflow 실행자.
 
 The login of the user that initiated the workflow run.
 
@@ -57,11 +61,15 @@ The login of the user that initiated the workflow run.
 
 `string`
 
+레포짓토리 이름.
+
 The owner and repository name. 
 
 ### github.event_name
 
 `string`
+
+이벤트 트리거 이름.
 
 The name of the event that triggered the workflow run.
 
@@ -74,6 +82,8 @@ The commit SHA that triggered the workflow run.
 ### github.ref
 
 `string`
+
+브랜치 레퍼런스.
 
 The branch or tag ref that triggered the workflow run.
 
