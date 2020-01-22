@@ -1,26 +1,12 @@
-name: Github Context
+name: Context Echo
 
 on: [push]
 
 jobs:
   my_jobs:
-    name: Echo github context
+    name: Echo context
     runs-on: ubuntu-latest
     steps:
-      - name: Echo context
-        id: echo
-        run: |
-          echo 'This event is ${{ github.event }}'
-          echo 'This event_path is ${{ github.event_path }}'
-          echo 'This workflow is ${{ github.workflow }}'
-          echo 'This actor is ${{ github.actor }}'
-          echo 'This repository is ${{ github.repository }}'
-          echo 'This event_name is ${{ github.event_name }}'
-          echo 'This ref is ${{ github.ref }}'
-          echo 'This head_ref is ${{ github.head_ref }}'
-          echo 'This base_ref is ${{ github.base_ref }}'
-          echo 'This workspace is ${{ github.workspace }}'
-          echo 'This action is ${{ github.action }}'
       - name: Echo jobs
         id: jobs
         run: |
@@ -43,3 +29,4 @@ jobs:
           echo 'This os is ${{ os }}'
           echo 'This temp is ${{ temp }}'
           echo 'This tool_cache is ${{ tool_cache }}'
+
