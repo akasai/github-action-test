@@ -7,39 +7,27 @@ jobs:
     name: Echo github context
     runs-on: ubuntu-latest
     steps:
-      - name: Echo context
-        id: echo
-        run: |
-          echo 'This event is ${{ github.event }}'
-          echo 'This event_path is ${{ github.event_path }}'
-          echo 'This workflow is ${{ github.workflow }}'
-          echo 'This actor is ${{ github.actor }}'
-          echo 'This repository is ${{ github.repository }}'
-          echo 'This event_name is ${{ github.event_name }}'
-          echo 'This ref is ${{ github.ref }}'
-          echo 'This head_ref is ${{ github.head_ref }}'
-          echo 'This base_ref is ${{ github.base_ref }}'
-          echo 'This workspace is ${{ github.workspace }}'
-          echo 'This action is ${{ github.action }}'
-      - name: Echo jobs
-        id: jobs
-        run: |
-          echo 'This job is ${{ job }}'
-          echo 'This status is ${{ job.status }}'
-          echo 'This container is ${{ job.container }}'
-          echo 'This container.network is ${{ job.container.network }}'
-          echo 'This container.id is ${{ job.container.id }}'
-          echo 'This services is ${{ job.services }}'
-          echo 'This services.network is ${{ job.services.network }}'
-      - name: Echo steps
-        id: steps
-        run: |
-          echo 'This steps is ${{ steps }}'
-          echo 'This steps.jobs is ${{ steps.jobs }}'
-          echo 'This steps.jobs.output is ${{ steps.jobs.output }}'
-      - name: Echo runner
-        id: runner
-        run: |
-          echo 'This os is ${{ os }}'
-          echo 'This temp is ${{ temp }}'
-          echo 'This tool_cache is ${{ tool_cache }}'
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
