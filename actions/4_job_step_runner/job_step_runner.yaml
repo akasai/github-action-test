@@ -1,0 +1,32 @@
+name: Context Echo
+
+on: [push]
+
+jobs:
+  my_jobs:
+    name: Echo context
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo jobs
+        id: jobs
+        run: |
+          echo 'This job is ${{ job }}'
+          echo 'This status is ${{ job.status }}'
+          echo 'This container is ${{ job.container }}'
+          echo 'This container.network is ${{ job.container.network }}'
+          echo 'This container.id is ${{ job.container.id }}'
+          echo 'This services is ${{ job.services }}'
+          echo 'This services.network is ${{ job.services.network }}'
+      - name: Echo steps
+        id: steps
+        run: |
+          echo 'This steps is ${{ steps }}'
+          echo 'This steps.jobs is ${{ steps.jobs }}'
+          echo 'This steps.jobs.output is ${{ steps.jobs.output }}'
+      - name: Echo runner
+        id: runner
+        run: |
+          echo 'This os is ${{ os }}'
+          echo 'This temp is ${{ temp }}'
+          echo 'This tool_cache is ${{ tool_cache }}'
+
