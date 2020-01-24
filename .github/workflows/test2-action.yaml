@@ -12,4 +12,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Check ls
-        run: echo `ls -la`
+        run: ls -la
