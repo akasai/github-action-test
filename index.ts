@@ -40,21 +40,20 @@ const main = async () => {
         message: `${failure.getRuleName()}: ${failure.getFailure()}`,
       }
     })
-
+console.log('### annotations', annotations)
     await gitToolkit.checks.create({
       owner,
       repo,
       head_sha,
-      name: 'ts-lint',
+      name: 'Linter',
       status: 'completed',
       conclusion: result.errorCount > 0 ? 'failure' : 'success',
       output: {
-        title:  'ts-lint',
+        title: 'Tslint Check Results',
         summary: `${result.errorCount} error(s), ${result.warningCount} warning(s) found`,
         annotations,
       },
     })
-
   } catch (err) {
     core.setFailed(`Action failed with error ${err}`)
   }
