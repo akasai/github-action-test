@@ -24,11 +24,11 @@
     "@actions/core": "^1.2.2",
     "@actions/github": "^2.1.0",
     "@octokit/rest": "^16.38.2",
+    "typescript": "^3.7.5",
     "tslint": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^13.5.0",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.7.5"
+    "ts-node": "^8.6.2"
   }
 }
