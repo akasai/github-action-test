@@ -1,5 +1,5 @@
 FROM node:12-alpine
-#MAINTAINER
+MAINTAINER akasai
 
 WORKDIR /usr/src/app
 

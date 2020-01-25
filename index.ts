@@ -1,9 +1,9 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import { Configuration, Linter } from 'tslint'
+import * as Octokit from '@octokit/rest'
 import * as fs from 'fs'
 import * as glob from 'glob'
-import * as Octokit from '@octokit/rest'
+import { Configuration, Linter } from 'tslint'
 
 type LEVEL = 'notice' | 'warning' | 'failure';
 const main = async () => {
@@ -18,7 +18,7 @@ const main = async () => {
 
     const fileList = glob.sync(pattern, {
       dot: true,
-      ignore: ['./node_modules/**']
+      ignore: ['./node_modules/**'],
     })
 
     const linter = new Linter({ fix: false, formatter: 'json' })
@@ -35,7 +35,7 @@ const main = async () => {
       return {
         path: failure.getFileName(),
         start_line: failure.getStartPosition().getLineAndCharacter().line,
-        end_line: failure.getEndPosition().getLineAndCharacter().line + 2,
+        end_line: failure.getEndPosition().getLineAndCharacter().line,
         annotation_level: level as LEVEL,
         message: `${failure.getRuleName()}: ${failure.getFailure()}`,
       }
