@@ -15,7 +15,6 @@ const main = async () => {
     const strict = core.getInput('strict')
 
     const gitToolkit: Octokit = new github.GitHub(token)
-    const checks = await gitToolkit.checks.create({ owner, repo, name: 'ts-lint', head_sha, status: 'in_progress' })
 
     const fileList = glob.sync(pattern, {
       dot: true,
@@ -42,10 +41,10 @@ const main = async () => {
       }
     })
 
-    await gitToolkit.checks.update({
+    await gitToolkit.checks.create({
       owner,
       repo,
-      check_run_id: checks.data.id,
+      head_sha,
       name: 'ts-lint',
       status: 'completed',
       conclusion: result.errorCount > 0 ? 'failure' : 'success',
