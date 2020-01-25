@@ -5,12 +5,14 @@ WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app
 COPY package-lock.json /usr/src/app
+COPY index.ts /usr/src/app
+COPY tsconfig.json /usr/src/app
 
 RUN npm ci --production
 
-COPY index.ts /usr/src/app
+RUN npm run build
 
-#COPY entrypoint.sh index.js /var/task/
+COPY entrypoint.sh /usr/src/app
 
-#ENTRYPOINT ["./entrypoint.sh"]
-CMD [ "npm", "run", "start:prod" ]
+ENTRYPOINT ["./entrypoint.sh"]
+#CMD [ "npm", "run", "start:prod" ]
