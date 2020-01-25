@@ -21,14 +21,16 @@
   },
   "homepage": "https://github.com/akasai/github-action-test#readme",
   "dependencies": {
-    "@types/node": "^13.5.0",
     "@actions/core": "^1.2.2",
     "@actions/github": "^2.1.0",
     "@octokit/rest": "^16.38.2",
-    "typescript": "^3.7.5",
-    "tslint": "^6.0.0"
+    "glob": "^7.1.6",
+    "tslint": "^6.0.0",
+    "typescript": "^3.7.5"
   },
   "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/node": "^13.5.0",
     "ts-node": "^8.6.2"
   }
 }

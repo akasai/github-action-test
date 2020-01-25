@@ -2,35 +2,60 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import { Configuration, Linter } from 'tslint'
 import * as fs from 'fs'
+import * as glob from 'glob'
+import * as Octokit from '@octokit/rest'
 
-const main = () => {
-  console.log('### github.context', github.context)
+type LEVEL = 'notice' | 'warning' | 'failure';
+const main = async () => {
+  const { repo: { owner, repo }, sha: head_sha } = github.context
   try {
-    const fileName = './index.ts'
-
-    const options = {
-      fix: false,
-      formatter: 'json',
-      rulesDirectory: 'customRules/',
-      formattersDirectory: 'customFormatters/'
-    }
-
     const configFile = core.getInput('config', { required: true })
     const pattern = core.getInput('pattern', { required: true })
     const token = core.getInput('token', { required: true })
     const strict = core.getInput('strict')
 
-    const octokit = new github.GitHub(token)
+    const gitToolkit: Octokit = new github.GitHub(token)
+    const checks = await gitToolkit.checks.create({ owner, repo, name: 'ts-lint', head_sha, status: 'in_progress' })
 
-    const fileContents = fs.readFileSync(fileName, 'utf8')
-    const linter = new Linter(options)
-    const configuration = Configuration.findConfiguration(configFile, fileName).results
+    const fileList = glob.sync(pattern, {
+      dot: true,
+      ignore: ['./node_modules/**']
+    })
 
-    linter.lint(fileName, fileContents, configuration)
+    const linter = new Linter({ fix: false, formatter: 'json' })
+
+    fileList.forEach((file) => {
+      const inFileContents = fs.readFileSync(file, 'utf8')
+      const configuration = Configuration.findConfiguration(configFile, file).results
+      linter.lint(file, inFileContents, configuration)
+    })
+
     const result = linter.getResult()
-    console.log('### result', result)
+    const annotations: Octokit.ChecksCreateParamsOutputAnnotations[] = result.failures.map((failure) => {
+      const level = { 'warning': 'warning', 'error': 'failure', 'off': 'notice' }[failure.getRuleSeverity()] || 'notice'
+      return {
+        path: failure.getFileName(),
+        start_line: failure.getStartPosition().getLineAndCharacter().line,
+        end_line: failure.getEndPosition().getLineAndCharacter().line,
+        annotation_level: level as LEVEL,
+        message: `${failure.getRuleName()}: ${failure.getFailure()}`,
+      }
+    })
+
+    await gitToolkit.checks.update({
+      owner,
+      repo,
+      check_run_id: checks.data.id,
+      name: 'ts-lint',
+      status: 'completed',
+      conclusion: result.errorCount > 0 ? 'failure' : 'success',
+      output: {
+        summary: `${result.errorCount} error(s), ${result.warningCount} warning(s) found`,
+        annotations,
+      },
+    })
+
   } catch (err) {
-    // setFailed logs the message and sets a failing exit code
     core.setFailed(`Action failed with error ${err}`)
   }
 }
