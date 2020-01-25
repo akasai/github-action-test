@@ -15,4 +15,3 @@ RUN npm run build
 COPY entrypoint.sh /usr/src/app
 
 ENTRYPOINT ["./entrypoint.sh"]
-#CMD [ "npm", "run", "start:prod" ]
