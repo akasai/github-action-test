@@ -1,0 +1,34 @@
+{
+  "name": "github-action-test",
+  "version": "1.0.0",
+  "description": "this repository is test for github action",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "ts-node index.ts",
+    "start:prod": "npm run build; node ./dist/index.js",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akasai/github-action-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akasai/github-action-test/issues"
+  },
+  "homepage": "https://github.com/akasai/github-action-test#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.2",
+    "@actions/github": "^2.1.0",
+    "@octokit/rest": "^16.38.2",
+    "tslint": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.5.0",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  }
+}
