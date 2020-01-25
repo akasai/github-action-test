@@ -32,13 +32,10 @@ const main = async () => {
     const result = linter.getResult()
     const annotations: Octokit.ChecksCreateParamsOutputAnnotations[] = result.failures.map((failure) => {
       const level = { 'warning': 'warning', 'error': 'failure', 'off': 'notice' }[failure.getRuleSeverity()] || 'notice'
-      console.log('### failure.getStartPosition()', failure.getStartPosition())
-      console.log('### failure.getStartPosition()', failure.getStartPosition().getPosition())
-      console.log('### failure.getStartPosition()', failure.getStartPosition().getLineAndCharacter())
       return {
         path: failure.getFileName(),
         start_line: failure.getStartPosition().getLineAndCharacter().line,
-        end_line: failure.getEndPosition().getLineAndCharacter().line,
+        end_line: failure.getEndPosition().getLineAndCharacter().line + 2,
         annotation_level: level as LEVEL,
         message: `${failure.getRuleName()}: ${failure.getFailure()}`,
       }
@@ -53,7 +50,7 @@ const main = async () => {
       conclusion: result.errorCount > 0 ? 'failure' : 'success',
       output: {
         title: 'Tslint Check Results',
-        summary: `${result.errorCount} error \n ${result.warningCount} warning`,
+        summary: `${result.errorCount} errors \n ${result.warningCount} warnings`,
         annotations,
       },
     })
