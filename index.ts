@@ -50,6 +50,7 @@ const main = async () => {
       status: 'completed',
       conclusion: result.errorCount > 0 ? 'failure' : 'success',
       output: {
+        title:  'ts-lint',
         summary: `${result.errorCount} error(s), ${result.warningCount} warning(s) found`,
         annotations,
       },
